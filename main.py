@@ -18,7 +18,7 @@ class DataTransfer:
         self.pg_conn = postgres_connection()
         self.ch_conn = clickhouse_connection()
         self.pg_cursor = self.pg_conn.connection.cursor()
-        self.csv_folder = 'csv/'
+        self.csv_folder = f'{settings.base_dir}/Rembo-Project-Assigment/csv/'
 
     def get_data_from_pg_src(self, table_name):
         log.info(f"Getting data from postgres table: {table_name}")

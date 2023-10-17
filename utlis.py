@@ -2,6 +2,7 @@ import time
 import psycopg2
 import logging
 import sys
+from random import randint
 
 from clickhouse_driver import Client
 import clickhouse_connect
@@ -130,7 +131,9 @@ columns = {
         'Total_Product_Cost',
         'Unit_Price',
         'Unit_Price_Discount_Pct',
-        'Employee_Id'
+        'Employee_Id',
+        'Customer_Id',
+        'Sales_Territory_Id',
         ]
 }
 
@@ -140,13 +143,13 @@ columns = {
 def generate_csv_files_with_data():
     fake = Faker()
     
-    with open('csv/customer.csv', 'w') as customer:
+    with open(f'{settings.base_dir}/Rembo-Project-Assigment/csv/customer.csv', 'w') as customer:
         log.info("Generating fake data for customers")
         writer = csv.writer(customer)
         writer.writerow(columns['Customer'])
-        for n in range(1, 100):
+        for n in range(1, 1001):
             writer.writerow([
-                n,
+                randint(1, 1000),
                 fake.last_name(),
                 fake.address(),
                 fake.address(),
@@ -178,36 +181,36 @@ def generate_csv_files_with_data():
             ])
 
     log.info("Generating fake data for sales_territory")
-    with open('csv/sales_territory.csv', 'w') as sales_territory:
+    with open(f'{settings.base_dir}/Rembo-Project-Assigment/csv/sales_territory.csv', 'w') as sales_territory:
         writer = csv.writer(sales_territory)
         writer.writerow(columns['Sales_Territory'])
-        for n in range(1, 100):
+        for n in range(1, 8):
             writer.writerow([
-                n,
+                randint(1, 1000),
                 fake.country(),
                 fake.city(),
                 fake.city()
             ])
 
     log.info("Generating fake data for employee")
-    with open('csv/employee.csv', 'w') as employee:
+    with open(f'{settings.base_dir}/Rembo-Project-Assigment/csv/employee.csv', 'w') as employee:
         writer = csv.writer(employee)
         writer.writerow(columns['Employee'])
-        for n in range(1, 100):
+        for n in range(1, 1001):
             writer.writerow([
-                n,
+                randint(1, 1000),
                 fake.name(),
                 fake.city()
             ])
 
     log.info("Generating fake data for sales")
-    with open('csv/sales.csv', 'w') as sales:
+    with open(f'{settings.base_dir}/Rembo-Project-Assigment/csv/sales.csv', 'w') as sales:
 
         writer = csv.writer(sales)
         writer.writerow(columns['Sales'])
         for n in range(1, 100):
             writer.writerow([
-                n,
+                randint(1, 1000),
                 fake.random_int(),
                 fake.random_int(),
                 fake.random_int(),
@@ -229,7 +232,10 @@ def generate_csv_files_with_data():
                 fake.random_int(),
                 fake.random_int(),
                 fake.random_int(),
-                fake.random_int()
+                fake.random_int(),
+                randint(1, 1000),
+                randint(1, 1000),
+                randint(1, 1000)
             ])
     
 
@@ -240,7 +246,7 @@ def load_to_postgresql():
     # cur = conn.cursor()
     for table in columns:
         log.info(f"Loading data to postgres table: {table}")
-        df = pd.read_csv(f'csv/{table.lower()}.csv')
+        df = pd.read_csv(f'{settings.base_dir}/Rembo-Project-Assigment/csv/{table.lower()}.csv')
         log.info(f"Data loaded to pandas dataframe")
         df.to_sql(table.lower(), conn, if_exists='append', index=False)
         log.info(f"Data loaded to postgres table: {table}")

@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 load_dotenv(os.path.join(SCRIPT_DIR, ".env"))
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+python_path = os.path.join(base_dir, 'Rembo-Project-Assigment/env/bin/python3.10')
 
 pg_user = os.getenv("PG_USER")
 pg_password = os.getenv("PG_PASSWORD")
