@@ -135,4 +135,3 @@ To create a report showing the top 100 customers for each territory with metrics
 Publish and Share the Report:
 
 Once we've created the necessary reports and dashboards in Power BI, we can publish them to Power BI Service and share them with our colleagues. We can also embed the reports in our website or application using the Power BI JavaScript API.
-
