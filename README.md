@@ -39,7 +39,11 @@
     ```bash
     pip install -r requirements.txt
     ```
-6. Run the application
+6. Copy the .env.example file to .env and update the environment variables
+    ```bash
+    cp .env.example .env
+    ```
+7. Run the application
     * Using the command line
     * LIST_COMMANDS bellow
     - generate_fake_data
@@ -56,7 +60,7 @@
     python main.py -c extract_and_load_to_clickhouse
     ```
 
-7. Run airflow jobs
+8. Run airflow jobs
 * open two terminal windows
 * in the first terminal window run the airflow webserver
     ```bash
@@ -68,7 +72,7 @@
     ```
 * open your browser and go to http://localhost:8081
 
-8. Open another terminal windowns and run this command to create airflow user
+9. Open another terminal windowns and run this command to create airflow user
     ```bash
     airflow users create \
         --username youre_username \
