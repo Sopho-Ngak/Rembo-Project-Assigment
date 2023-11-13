@@ -2,6 +2,7 @@
 import sys
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
@@ -20,3 +21,15 @@ clickhouse_password = os.getenv("CLICKHOUSE_PASSWORD")
 clickhouse_host = os.getenv("CLICKHOUSE_HOST")
 clickhouse_port = os.getenv("CLICKHOUSE_PORT")
 clickhouse_db = os.getenv("CLICKHOUSE_DB")
+clickhouse_interface = os.getenv("CLICKHOUSE_INTERFACE")
+
+default_args = {
+    'owner': 'rembo',
+    'depends_on_past': False,
+    'start_date': datetime(2023, 10, 16),
+    'email': ['sopho.ngak@gmail.com'],
+    'email_on_failure': True,
+    'email_on_retry': False,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=1)
+}

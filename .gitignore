@@ -5,3 +5,11 @@ __pycache__
 csv/*
 **/env/
 **/csv/*
+status
+uuid
+preprocessed_configs
+preprocessed_configs/*
+**/preprocessed_configs/*
+metadata
+metadata/*
+**/metadata/*

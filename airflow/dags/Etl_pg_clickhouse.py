@@ -1,13 +1,12 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
-from datetime import datetime
+from datetime import datetime, timedelta
 import psycopg2
 import pandas as pd
 from clickhouse_driver import Client
 import os
-
-from config import base_dir, python_path
+from config import base_dir, python_path, default_args
 
 
 
@@ -18,8 +17,10 @@ def get_command(file_nane, commad):
 # Define the DAG
 dag = DAG(
     'rembo_etl_pg_clickhouse',
-    schedule_interval='10 1 * * *',  # Adjust the schedule as needed
+    default_args=default_args,
+    schedule_interval='10 12 * * *',  # Adjust the schedule as needed
     start_date=datetime(2023, 10, 16),
+    catchup=False,
 )
 
 generate_fake_data = BashOperator(

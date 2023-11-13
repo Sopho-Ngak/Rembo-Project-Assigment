@@ -1,10 +1,7 @@
-import time
-import psycopg2
 import logging
 import sys
 from random import randint
 
-from clickhouse_driver import Client
 import clickhouse_connect
 import config as settings
 from faker import Faker
@@ -25,45 +22,16 @@ def postgres_connection():
 def clickhouse_connection():
     log.info("Connecting to clickhouse")
     conn = clickhouse_connect.get_client(
+        interface=settings.clickhouse_interface,
         host=settings.clickhouse_host, 
         port=settings.clickhouse_port, 
         user=settings.clickhouse_user, 
         password=settings.clickhouse_password,
-        database=settings.clickhouse_db
         )
     log.info(f"Connection to clickhouse established: { conn.query_df('SHOW TABLES FROM rembo_olap')}")
     return conn
 
-'''
-CREATE TABLE Sales(
-Sales_Id SERIAL NOT NULL,
-CurrencyKey varchar(50) NULL,
-CustomerKey varchar(50) NULL,
-Discount_Amount varchar(50) NULL,
-DueDate varchar(50) NULL,
-DueDateKey varchar(50) NULL,
-Extended_Amount varchar(50) NULL,
-Freight varchar(50) NULL,
-Order_Date varchar(50) NULL,
-Order_Quantity varchar(50) NULL,
-Product_Standard_Cost varchar(50) NULL,
-Revision_Number varchar(50) NULL,
-Sales_Amount varchar(50) NULL,
-Sales_Order_Line_Number varchar(50) NULL,
-Sales_Order_Number varchar(50) NULL,
-SalesTerritoryKey varchar(50) NULL,
-ShipDate varchar(50) NULL,
-Tax_Amt varchar(50) NULL,
-Total_Product_Cost varchar(50) NULL,
-Unit_Price varchar(50) NULL,
-Unit_Price_Discount_Pct varchar(50) NULL,
-Employee_Id INT NOT NULL,
-PRIMARY KEY (Sales_Id),
-FOREIGN KEY (Employee_Id) REFERENCES Employee (Employee_Id)
-FOREIGN KEY (Sales_Territory_Id) REFERENCES Sales_Territory (Sales_Territory_Id)
-)
 
-'''
 
 # def get_colums(tabel_name):
 columns = {
@@ -142,6 +110,7 @@ columns = {
 
 def generate_csv_files_with_data():
     fake = Faker()
+    s = 1/0
     
     with open(f'{settings.base_dir}/Rembo-Project-Assigment/csv/customer.csv', 'w') as customer:
         log.info("Generating fake data for customers")
